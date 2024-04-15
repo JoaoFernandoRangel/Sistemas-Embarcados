@@ -33,10 +33,10 @@ struct Motor motor4 = {
 };
 
 /*************Declarações das variáveis dos PID's******/
-double input1,output1,retorno1, kp1, ki1, kd1;
-double input2,output2,retorno2, kp2, ki2, kd2;
-double input3,output3,retorno3, kp3, ki3, kd3;
-double input4,output4,retorno4, kp4, ki4, kd4;
+double input1,output1,retorno1, kp1=1, ki1=1, kd1=1;
+double input2,output2,retorno2, kp2=1, ki2=1, kd2=1;
+double input3,output3,retorno3, kp3=1, ki3=1, kd3=1;
+double input4,output4,retorno4, kp4=1, ki4=1, kd4=1;
 /*************Declarações de PID****************/
 PID pid_motor1(&input1, &output1, &retorno1, kp1, ki1, kd1, DIRECT);
 PID pid_motor2(&input2, &output2, &retorno2, kp2, ki2, kd2, DIRECT);
@@ -74,6 +74,22 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  if(pid_motor1.Compute()){
+    if(ouput1 > 0){ // aumentar o angulo
+      analogWrite(motor1.saida1, output1);
+      analogWrite(motor1.saida2, 0);
+    } else{ // diminuir o angulo
+      analogWrite(motor1.saida1, 0);
+      analogWrite(motor1.saida2, abs(output1));
+    }
+  }
+
+
+
+
+
+
+
+
 
 }
