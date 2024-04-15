@@ -74,6 +74,7 @@ void setup() {
 }
 
 void loop() {
+  // Adicionar função seletora de pose a partir de um input de comunicação serial.
   if(pid_motor1.Compute()){
     if(ouput1 > 0){ // aumentar o angulo
       analogWrite(motor1.saida1, output1);
