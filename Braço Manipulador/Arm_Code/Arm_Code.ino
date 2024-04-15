@@ -83,6 +83,31 @@ void loop() {
       analogWrite(motor1.saida2, abs(output1));
     }
   }
+    if(pid_motor2.Compute()){
+    if(ouput1 > 0){ // aumentar o angulo
+      analogWrite(motor2.saida1, output1);
+      analogWrite(motor2.saida2, 0);
+    } else{ // diminuir o angulo
+      analogWrite(motor2.saida1, 0);
+      analogWrite(motor2.saida2, abs(output1));
+    }
+  }  if(pid_motor3.Compute()){
+    if(ouput1 > 0){ // aumentar o angulo
+      analogWrite(motor3.saida1, output1);
+      analogWrite(motor3.saida2, 0);
+    } else{ // diminuir o angulo
+      analogWrite(motor3.saida1, 0);
+      analogWrite(motor3.saida2, abs(output1));
+    }
+  }  if(pid_motor4.Compute()){
+    if(ouput1 > 0){ // aumentar o angulo
+      analogWrite(motor4.saida1, output1);
+      analogWrite(motor4.saida2, 0);
+    } else{ // diminuir o angulo
+      analogWrite(motor4.saida1, 0);
+      analogWrite(motor4.saida2, abs(output1));
+    }
+  }
 
 
 
