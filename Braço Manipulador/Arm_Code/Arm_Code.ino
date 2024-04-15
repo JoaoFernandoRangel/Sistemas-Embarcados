@@ -4,32 +4,32 @@
 
 struct Motor{
   uint8_t retorno;
-  int saida1; // definimos 1 como aumentar o angulo com relação à mesa
-  int saida2; // definimos 2 como diminuir o angulo com relação à mesa
+  int aumentar; // definimos 1 como aumentar o angulo com relação à mesa
+  int diminuir; // definimos 2 como diminuir o angulo com relação à mesa
 };
 
 struct Motor motor1 = {
   .retorno = 'A0',
-  .saida1 = 4,
-  .saida2 = 5
+  .aumentar = 4,
+  .diminuir = 5
 };
 
 struct Motor motor2 = {
   .retorno = 'A1',
-  .saida1 = 6,
-  .saida2 = 7
+  .aumentar = 6,
+  .diminuir = 7
 };
 
 struct Motor motor3 = {
   .retorno = 'A2',
-  .saida1 = 8,
-  .saida2 = 9
+  .aumentar = 8,
+  .diminuir = 9
 };
 
 struct Motor motor4 = {
   .retorno = 'A3',
-  .saida1 = 10,
-  .saida2 = 11
+  .aumentar = 10,
+  .diminuir = 11
 };
 
 /*************Declarações das variáveis dos PID's******/
@@ -50,14 +50,14 @@ void setup() {
   pinMode(motor3.retorno, INPUT);
   pinMode(motor4.retorno, INPUT);
   //*********Declaração das saidas dos motores******/  
-  pinMode(motor1.saida1, OUTPUT);
-  pinMode(motor1.saida2, OUTPUT);
-  pinMode(motor2.saida1, OUTPUT);
-  pinMode(motor2.saida2, OUTPUT);
-  pinMode(motor3.saida1, OUTPUT);
-  pinMode(motor3.saida2, OUTPUT);
-  pinMode(motor4.saida1, OUTPUT);
-  pinMode(motor4.saida2, OUTPUT);
+  pinMode(motor1.aumentar, OUTPUT);
+  pinMode(motor1.diminuir, OUTPUT);
+  pinMode(motor2.aumentar, OUTPUT);
+  pinMode(motor2.diminuir, OUTPUT);
+  pinMode(motor3.aumentar, OUTPUT);
+  pinMode(motor3.diminuir, OUTPUT);
+  pinMode(motor4.aumentar, OUTPUT);
+  pinMode(motor4.diminuir, OUTPUT);
   //*********Declarações PID************************/
   pid_motor1.SetMode(1);
   pid_motor1.SetSampleTime(200);
@@ -74,39 +74,44 @@ void setup() {
 }
 
 void loop() {
-  // Adicionar função seletora de pose a partir de um input de comunicação serial.
+   /*Adicionar função seletora de pose a partir de um input de comunicação serial.
+   A função deve pegar os valores da comunicação serial e atribuir cada um deles para um input*/
+  
+
+
+
   if(pid_motor1.Compute()){
     if(ouput1 > 0){ // aumentar o angulo
-      analogWrite(motor1.saida1, output1);
-      analogWrite(motor1.saida2, 0);
+      analogWrite(motor1.aumentar, output1);
+      analogWrite(motor1.diminuir, 0);
     } else{ // diminuir o angulo
-      analogWrite(motor1.saida1, 0);
-      analogWrite(motor1.saida2, abs(output1));
+      analogWrite(motor1.aumentar, 0);
+      analogWrite(motor1.diminuir, abs(output1));
     }
   }
     if(pid_motor2.Compute()){
     if(ouput1 > 0){ // aumentar o angulo
-      analogWrite(motor2.saida1, output1);
-      analogWrite(motor2.saida2, 0);
+      analogWrite(motor2.aumentar, output1);
+      analogWrite(motor2.diminuir, 0);
     } else{ // diminuir o angulo
-      analogWrite(motor2.saida1, 0);
-      analogWrite(motor2.saida2, abs(output1));
+      analogWrite(motor2.aumentar, 0);
+      analogWrite(motor2.diminuir, abs(output1));
     }
   }  if(pid_motor3.Compute()){
     if(ouput1 > 0){ // aumentar o angulo
-      analogWrite(motor3.saida1, output1);
-      analogWrite(motor3.saida2, 0);
+      analogWrite(motor3.aumentar, output1);
+      analogWrite(motor3.diminuir, 0);
     } else{ // diminuir o angulo
-      analogWrite(motor3.saida1, 0);
-      analogWrite(motor3.saida2, abs(output1));
+      analogWrite(motor3.aumentar, 0);
+      analogWrite(motor3.diminuir, abs(output1));
     }
   }  if(pid_motor4.Compute()){
     if(ouput1 > 0){ // aumentar o angulo
-      analogWrite(motor4.saida1, output1);
-      analogWrite(motor4.saida2, 0);
+      analogWrite(motor4.aumentar, output1);
+      analogWrite(motor4.diminuir, 0);
     } else{ // diminuir o angulo
-      analogWrite(motor4.saida1, 0);
-      analogWrite(motor4.saida2, abs(output1));
+      analogWrite(motor4.aumentar, 0);
+      analogWrite(motor4.diminuir, abs(output1));
     }
   }
 
