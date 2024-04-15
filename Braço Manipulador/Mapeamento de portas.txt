@@ -1,0 +1,16 @@
+M1 (Base)
+PWM 4&5
+Retorno A0
+
+M2(Primeira articulação)
+PWM 6&7
+Retorno A1
+
+M3
+PWM 8&9
+Retorno A2
+
+M4
+PWM 10&11
+Retorno A3
+
