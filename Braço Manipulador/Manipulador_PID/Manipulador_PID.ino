@@ -1,28 +1,22 @@
 #include <PID_v1_bc.h>
 // Definir limites de segurança
-//RD5 NT modelo Robo DItacta Italia
-//int pose1[] = {225, 560, 282, 542};
-
+// Ditacta Italia  Modelo:RD5 NT  
 
 struct Motor{
   uint8_t retorno;
   int direita; // definimos 1 como direita o angulo com relação à mesa
-  int esquerda;
- // definimos 2 como esquerda o angulo com relação à mesa
+  int esquerda;// definimos 2 como esquerda o angulo com relação à mesa
 };
-
 struct Motor motor1 = {
   .retorno = A0,
   .direita  = 5,
   .esquerda = 4
 };
-
 struct Motor motor2 = {
   .retorno = A1,
   .direita = 6,
   .esquerda = 7
 };
-
 struct Motor motor3 = {
   .retorno = A2,
   .direita = 8,
@@ -46,49 +40,51 @@ PID pid_motor2(&input2, &output2, &retorno2, kp2, ki2, kd2, DIRECT);
 PID pid_motor3(&input3, &output3, &retorno3, kp3, ki3, kd3, DIRECT);
 PID pid_motor4(&input4, &output4, &retorno4, kp4, ki4, kd4, DIRECT);
 
-/**********************************************/
-double pose1[] = {450, 546, 270, 470}; //Central
-double pose2[] = {584, 498, 113, 484}; //Davi
-double pose3[] = {312, 515, 215, 480}; //Soeiro
+/*************Declarações das poses********************/
+double pose1[] = {450, 546, 270, 470}; //Pose1
+double pose2[] = {584, 498, 113, 484}; //Pose2
+double pose3[] = {312, 515, 215, 480}; //Pose3
 double pose4[] = {168, 451, 378, 380}; //Pose4
 double pose5[] = {720, 489, 345, 500}; //Pose5
 
 void setup() {
-  //*********Declaração das entradas do retorno******/ 
+/*********Declaração das entradas do retorno******/ 
   Serial.begin(115200); 
   pinMode(motor1.retorno, INPUT);
   pinMode(motor2.retorno, INPUT);
   pinMode(motor3.retorno, INPUT);
   pinMode(motor4.retorno, INPUT);
 
-//*********Declaração das saidas dos motores******/  
-  pinMode(motor1.direita, OUTPUT);
+/*********Declaração das saidas dos motores******/  
+  pinMode(motor1.direita,  OUTPUT);
   pinMode(motor1.esquerda, OUTPUT);
-  pinMode(motor2.direita, OUTPUT);
+  pinMode(motor2.direita,  OUTPUT);
   pinMode(motor2.esquerda, OUTPUT);
-  pinMode(motor3.direita, OUTPUT);
+  pinMode(motor3.direita,  OUTPUT);
   pinMode(motor3.esquerda, OUTPUT);
-  pinMode(motor4.direita, OUTPUT);
+  pinMode(motor4.direita,  OUTPUT);
   pinMode(motor4.esquerda, OUTPUT); 
-//*********Declarações PID************************/
 
+/*********Declarações PID************************/
   pid_motor1.SetMode(1);
   pid_motor1.SetSampleTime(100);
   pid_motor1.SetOutputLimits(-255, 255);
+
   pid_motor2.SetMode(1);
   pid_motor2.SetSampleTime(100);
   pid_motor2.SetOutputLimits(-255, 255);
+
   pid_motor3.SetMode(1);
   pid_motor3.SetSampleTime(100);
   pid_motor3.SetOutputLimits(-255, 255);
+
   pid_motor4.SetMode(1);
   pid_motor4.SetSampleTime(100);
   pid_motor4.SetOutputLimits(-255, 255);
 }
-bool teste = 1;
-int count=0, i = 0;
-unsigned long agora = 0;
 
+
+/*Função de troca de poses.Processa a string que chega pela comunicação serial e designa a pose selecionada para o robo*/
 void troca_pose(String variavel){
   switch (variavel[4]){
     case '1':
@@ -129,8 +125,7 @@ void troca_pose(String variavel){
   }
 }
 
-
-
+unsigned long agora = 0;
 void loop() {  
   retorno4 = analogRead(motor4.retorno);
   retorno3 = analogRead(motor3.retorno);
@@ -143,7 +138,10 @@ void loop() {
     troca_pose(receivedString);  
   }
 
-  /*
+
+
+
+  /*Mantenho essa parte do código para medições futuras de retorno de posição
   Serial.print(retorno1);
   Serial.print("||");
   Serial.print(retorno2);
@@ -152,43 +150,38 @@ void loop() {
   Serial.print("||");
   Serial.println(retorno4);*/
 
-/* 
-  Serial.print(analogRead(motor2.retorno));
-  Serial.println(" retorno2||");
-*/
-  
   if(pid_motor1.Compute()){
-    if(output1 > 0){ // direita o angulo
+    if(output1 > 0){ 
     analogWrite(motor1.direita, output1);
     analogWrite(motor1.esquerda, 0);
-    } else{ // esquerda o angulo
+    } else{ 
     analogWrite(motor1.direita, 0);
     analogWrite(motor1.esquerda, abs(output1));
     }     
   }
   if(pid_motor2.Compute()){
-    if(output2 > 0){ // direita o angulo
+    if(output2 > 0){ 
     analogWrite(motor2.direita, output2);
     analogWrite(motor2.esquerda, 0);
-    } else{ // esquerda o angulo
+    } else{ 
     analogWrite(motor2.direita, 0);
     analogWrite(motor2.esquerda, abs(output2));
     }     
   }
   if(pid_motor3.Compute()){
-    if(output3 > 0){ // direita o angulo
+    if(output3 > 0){ 
     analogWrite(motor3.direita, output3);
     analogWrite(motor3.esquerda, 0);
-    } else{ // esquerda o angulo
+    } else{ 
     analogWrite(motor3.direita, 0);
     analogWrite(motor3.esquerda, abs(output3));
     }     
   }
   if(pid_motor4.Compute()){
-    if(output4 > 0){ // direita o angulo
+    if(output4 > 0){ 
     analogWrite(motor4.direita, output4);
     analogWrite(motor4.esquerda, 0);
-    } else{ // esquerda o angulo
+    } else{ 
     analogWrite(motor4.direita, 0);
     analogWrite(motor4.esquerda, abs(output4));}
   }
